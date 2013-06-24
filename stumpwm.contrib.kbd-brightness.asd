@@ -21,6 +21,6 @@
   :description "Provides keyboard brightness control for stumpwm."
   :author "Russell Sim <russell.sim@gmail.com>"
   :license "GPL"
-  :depends-on (#:stumpwm)
+  :depends-on (#:stumpwm #:dbus)
   :components ((:file "package")
-               (:file "stumpwm-kbd-brightness")))
+               (:file "kbd-brightness")))
