@@ -13,7 +13,7 @@
 ** usage
 
 #+BEGIN_SRC lisp
-(load-module "kdb-brightness")
+(asdf:oos 'asdf:load-op :stumpwm.contrib.kbd-brightness)
 (define-key *top-map* (kbd "XF86KbdBrightnessUp") "kbd-brightness 25")
 (define-key *top-map* (kbd "XF86KbdBrightnessDown") "kbd-brightness -25")
 #+END_SRC
