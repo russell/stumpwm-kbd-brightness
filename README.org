@@ -5,27 +5,27 @@
 
 ** requires
 
-   dbus -- https://github.com/lucashpandolfo/dbus
+   dbus -- https://github.com/death/dbus
 
    If you are planning on using this it's probably best if you
    use it in conjunction with [[http://www.quicklisp.org/beta/][Quicklisp]].
 
 ** usage
 
-#+BEGIN_SRC lisp
-(asdf:oos 'asdf:load-op :stumpwm.contrib.kbd-brightness)
-(define-key *top-map* (kbd "XF86KbdBrightnessUp") "kbd-brightness 25")
-(define-key *top-map* (kbd "XF86KbdBrightnessDown") "kbd-brightness -25")
-#+END_SRC
+   #+BEGIN_SRC lisp
+   (asdf:oos 'asdf:load-op :stumpwm.contrib.kbd-brightness)
+   (define-key *top-map* (kbd "XF86KbdBrightnessUp") "kbd-brightness 25")
+   (define-key *top-map* (kbd "XF86KbdBrightnessDown") "kbd-brightness -25")
+   #+END_SRC
 
    In your ~/.stumpwmrc
 
    If you would like the current brightness value to be displayed then
    add the following to your ~/.stumpwmrc
 
-#+BEGIN_SRC lisp
-(setf stumpwm.contrib.kbd-brightness:*keyboard-brightness-display* t)
-#+END_SRC
+   #+BEGIN_SRC lisp
+   (setf stumpwm.contrib.kbd-brightness:*keyboard-brightness-display* t)
+   #+END_SRC
 
 ** license
 

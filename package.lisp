@@ -20,11 +20,14 @@
 (defpackage #:stumpwm.contrib.kbd-brightness
   (:use #:cl)
   (:import-from #:stumpwm
-                #:defcommand)
-  (:import-from #:dbus
-                #:system-server-addresses
-                #:with-open-bus
-                #:with-introspected-object)
+                #:defcommand
+                #:message)
+  (:import-from #:stumpwm.contrib.dbus
+                #:with-introspected-object
+                #:alet*
+                #:finish
+                #:with-future)
+
   (:export
    #:get-brightness
    #:set-brightness

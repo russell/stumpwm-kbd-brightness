@@ -21,9 +21,8 @@
 (defvar *keyboard-brightness-display* nil)
 
 (defmacro with-kbd-backlight ((backlight) &body body)
-  `(with-open-bus (bus (system-server-addresses))
-    (with-introspected-object (,backlight bus "/org/freedesktop/UPower/KbdBacklight" "org.freedesktop.UPower")
-      ,@body)))
+  `(with-introspected-object (,backlight "/org/freedesktop/UPower/KbdBacklight" "org.freedesktop.UPower")
+     ,@body))
 
 (defun get-brightness (backlight)
   (funcall backlight "org.freedesktop.UPower.KbdBacklight" "GetBrightness"))
@@ -36,15 +35,18 @@
 
 (defcommand kbd-brightness (inc) ((:number "Adjust brightness: "))
   "adjust the keyboard brightness."
-  (with-kbd-backlight (backlight)
-    (let* ((current (get-brightness #'backlight))
-           (max (max-brightness #'backlight))
-           (min 0)
-           (new (let ((possible-value (+ current inc)))
-                  (cond
-                    ((not (plusp possible-value)) min)
-                    ((> possible-value max) max)
-                    (t possible-value)))))
-      (set-brightness #'backlight new)
-      (when *keyboard-brightness-display*
-        (format nil "Keyboard Brightness: ~d%" (round (* (/ new max) 100)))))))
+  (with-future (future)
+      (with-kbd-backlight (backlight)
+        (alet* ((current (get-brightness #'backlight))
+                (max (max-brightness #'backlight))
+                (min 0)
+                (new (let ((possible-value (+ current inc)))
+                       (cond
+                         ((not (plusp possible-value)) min)
+                         ((> possible-value max) max)
+                         (t possible-value)))))
+          (alet ((f (set-brightness #'backlight new)))
+            (declare (ignore f))
+            (finish future
+             (when *keyboard-brightness-display*
+               (message "Keyboard Brightness: ~d%" (round (* (/ new max) 100))))))))))
