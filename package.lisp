@@ -24,6 +24,7 @@
                 #:message)
   (:import-from #:stumpwm.contrib.dbus
                 #:with-introspected-object
+                #:alet
                 #:alet*
                 #:finish
                 #:with-future)
